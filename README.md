@@ -78,6 +78,13 @@ The Application will be available at: `http://localhost:4200`
 - `POST /api/attendance/` - Mark attendance
 - `GET /api/attendance/{employee_id}` - Get attendance history
 
+## Assumptions and Limitations
+
+- **Local MongoDB**: The application assumes a local instance of MongoDB is running on port 27017.
+- **No Authentication**: This is a "Lite" version and does not currently implement user authentication or role-based access control. All APIs are open.
+- **Network Dependency**: The Frontend assumes the Backend is available at `http://localhost:8000` (default) or the URL specified in environment files.
+- **Development Focus**: CORS settings in the backend are currently permissive (`*`) for development convenience and should be restricted for production.
+
 ## Project Structure
 
 ```
