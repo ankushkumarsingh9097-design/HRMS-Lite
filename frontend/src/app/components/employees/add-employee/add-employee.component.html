@@ -1,0 +1,56 @@
+<div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h1>
+        <a routerLink="/employees" class="text-blue-600 hover:underline">Back to List</a>
+    </div>
+
+    <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ error }}
+    </div>
+
+    <div *ngIf="success" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{ success }}
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Full Name</label>
+            <input id="name" type="text" formControlName="name"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div *ngIf="employeeForm.get('name')?.touched && employeeForm.get('name')?.invalid"
+                class="text-red-500 text-xs italic">Name is required.</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="employee_id" class="block text-gray-700 text-sm font-bold mb-2">Employee ID</label>
+            <input id="employee_id" type="text" formControlName="employee_id"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div *ngIf="employeeForm.get('employee_id')?.touched && employeeForm.get('employee_id')?.invalid"
+                class="text-red-500 text-xs italic">Employee ID is required.</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+            <input id="email" type="email" formControlName="email"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid"
+                class="text-red-500 text-xs italic">Valid email is required.</div>
+        </div>
+
+        <div class="mb-6">
+            <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
+            <input id="department" type="text" formControlName="department"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div *ngIf="employeeForm.get('department')?.touched && employeeForm.get('department')?.invalid"
+                class="text-red-500 text-xs italic">Department is required.</div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" [disabled]="employeeForm.invalid || loading"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 transition">
+                {{ loading ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update Employee' : 'Add
+                Employee') }}
+            </button>
+        </div>
+    </form>
+</div>

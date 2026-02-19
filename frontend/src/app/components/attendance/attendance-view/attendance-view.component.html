@@ -1,0 +1,58 @@
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Attendance Records</h1>
+    <a routerLink="/attendance/mark"
+        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition">
+        Mark Attendance
+    </a>
+</div>
+
+<div class="bg-white shadow rounded-lg p-6 mb-6">
+    <label for="employeeSelect" class="block text-gray-700 text-sm font-bold mb-2">Select Employee to View
+        History</label>
+    <select id="employeeSelect" [(ngModel)]="selectedEmployeeId" (change)="onEmployeeSelect()"
+        class="block w-full md:w-1/2 bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+        <option value="">-- Select Employee --</option>
+        <option *ngFor="let emp of employees" [value]="emp.employee_id">
+            {{ emp.name }} ({{ emp.employee_id }})
+        </option>
+    </select>
+</div>
+
+<div *ngIf="loading" class="text-center py-10">
+    <p class="text-gray-500">Loading attendance records...</p>
+</div>
+
+<div *ngIf="!loading && attendanceRecords.length === 0" class="text-center py-10 bg-gray-50 rounded">
+    <p class="text-gray-500">No attendance records found.</p>
+</div>
+
+<div *ngIf="attendanceRecords.length > 0" class="bg-white shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee ID
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let record of attendanceRecords">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{ record.date }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                        [ngClass]="record.status === 'Present' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                        {{ record.status }}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <span class="font-medium text-gray-900">{{ getEmployeeName(record.employee_id) }}</span>
+                    <span class="text-gray-400 text-xs ml-1">({{ record.employee_id }})</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
